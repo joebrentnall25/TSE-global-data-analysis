@@ -3,8 +3,8 @@ import io
 import pandas as pd
 
 
-
 def parse_file_to_df(contents, filename):
+    """ Read a csv or xls file by content string and filename and return the result as a pandas dataframe""" 
     content_type, content_string = contents.split(',')
     decoded = base64.b64decode(content_string)
     try:
