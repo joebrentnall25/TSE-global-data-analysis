@@ -9,5 +9,4 @@ import pandas as pd
 from app import app
 from helpers import *
 
-
-# Callback base file
+# Graph / plot callbacks

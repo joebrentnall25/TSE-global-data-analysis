@@ -4,13 +4,16 @@ import uuid as uuid
 import pandas as pd
 import plotly.graph_objects as go
 import plotly_express as px
+from header import serve_header
+from body import serve_body
 
 
 def serve_layout():
-    session_id = str(uuid.uuid4()) # Generate a random session ID for each user -> in case flask cache is needed
+    session_id = str(uuid.uuid4())
     return html.Div(id='root',
     children=[
-        html.Div(session_id, id='session-id', style={'display': 'none'}), # hidden sess id div  
+        html.Div(session_id, id='session-id'), # Show Session ID for debugging purposes
         dcc.Store(id='user-file-store', storage_type='session'), # User file store
-        html.H1("Hello, World!")
+        serve_header(),
+        serve_body()
 ])
