@@ -3,9 +3,10 @@ import io
 import pandas as pd
 
 
-def parse_file_to_df(contents, filename):
-    """ Read a csv or xls file by content string and filename and return the result as a pandas dataframe""" 
-    content_type, content_string = contents.split(',')
+def parse_file_to_df(contents, filename, delim):
+    """ Read a csv or xls file by content string, filename and delimitter, 
+    and return the result as a pandas dataframe""" 
+    content_type, content_string = contents.split(delim)
     decoded = base64.b64decode(content_string)
     try:
         if 'csv' in filename:

@@ -7,10 +7,10 @@ import plotly_express as px
 
 
 def serve_layout():
-    session_id = str(uuid.uuid4()) # Generate a random session ID for each user -> used for FS cache
+    session_id = str(uuid.uuid4()) # Generate a random session ID for each user -> in case flask cache is needed
     return html.Div(id='root',
     children=[
-        html.Div(session_id, id='session-id', style={'display': 'none'}), # hidden id div  
+        html.Div(session_id, id='session-id', style={'display': 'none'}), # hidden sess id div  
         dcc.Store(id='user-file-store', storage_type='session'), # User file store
         html.H1("Hello, World!")
 ])
