@@ -10,4 +10,27 @@ from app import app
 from helpers import *
 
 
-# UI callbacks
+
+@app.callback(Output('session', 'data'),
+              [Input('upload-data', 'contents')],
+              [State('upload-data', 'filename')])
+def update_storage(contents, filename):
+    if contents is None:
+        raise PreventUpdate
+    else:
+        df = parse_file_to_df(contents, filename)
+        return df.to_json()
+
+
+@app.callback(Output('chart-creation-area', 'children'),
+              [Input('show-file', 'n_clicks')],
+              [State('session', 'data')])
+def populate_chart_menu(n_clicks, data_store):
+    if data_store is None or n_clicks is None:
+        raise PreventUpdate
+    else:
+        df = pd.read_json(data_store)
+        return [
+            dcc.Dropdown(id='dropdown', options=[{'label': i, 'value': i } for i in df.columns], value=df.columns[0]),
+            html.Button('Create chart', id='create-chart')
+        ]

@@ -5,7 +5,7 @@ from app import app
 from app import server # Need for heroku procfile
 from layouts import serve_layout
 import uiCallbacks
-import graphCallbacks
+import chartCallbacks
 
 app.layout = serve_layout
 
