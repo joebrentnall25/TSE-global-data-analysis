@@ -32,5 +32,13 @@ def populate_chart_menu(n_clicks, data_store):
         df = pd.read_json(data_store)
         return [
             dcc.Dropdown(id='dropdown', options=[{'label': i, 'value': i } for i in df.columns], value=df.columns[0]),
+            dcc.RadioItems(id='location-radio',
+                options=[
+                    {'label': 'ISO-3', 'value': 'ISO-3'},
+                    {'label': 'Country Names', 'value': 'Country Names'},
+                ],
+             value='ISO-3'
+            ),  
+            dcc.Dropdown(id='country', options=[{'label': i, 'value': i } for i in df.columns], value=df.columns[0]),
             html.Button('Create chart', id='create-chart')
         ]
