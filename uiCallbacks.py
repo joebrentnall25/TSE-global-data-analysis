@@ -57,5 +57,5 @@ def populate_choropleth_menu(n_clicks, filename):
             ),
             dcc.Dropdown(id='country', options=[{'label': i, 'value': i}
                                                 for i in df.columns], value=df.columns[0]),
-            html.Button('Create chart', id='create-chart')
+            html.Button('Create choropleth', id='create-choropleth')
         ]

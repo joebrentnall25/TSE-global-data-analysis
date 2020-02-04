@@ -10,7 +10,7 @@ from helpers import *
 
 
 @app.callback(Output('chart-output-area', 'children'),
-              [Input('create-chart', 'n_clicks')],
+              [Input('create-choropleth', 'n_clicks')],
               [State('session', 'data'), State('dropdown', 'value'),
               State('country', 'value'), State('location-radio', 'value')])
 def create_choropleth(n_clicks, data_store, variable, country, location_mode):
@@ -31,7 +31,7 @@ def create_choropleth(n_clicks, data_store, variable, country, location_mode):
                     id='user-choropleth',
                     figure=fig),
             ]
-        except Exception:
+        except TypeError:
             return [
                 html.H1("Error can not create choropleth from qualative variable.")
             ]
