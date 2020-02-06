@@ -5,8 +5,6 @@ WORKDIR /app
 ADD requirements.txt /app/
 RUN pip install -r requirements.txt
 ADD . /app/
-
 EXPOSE 8050
 
-ENTRYPOINT [ "python" ]
-CMD ["index.py"]
+CMD ["gunicorn", "-b", "0.0.0.0:8050", "index:server"]

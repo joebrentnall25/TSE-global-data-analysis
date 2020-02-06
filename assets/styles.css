@@ -595,11 +595,13 @@ hr {
     width: 100%;
 }
 
+
 #header {
     background-color: #252e3f;
     width: 100%
     padding 2.5rem 2.5rem 2.5rem 2.5rem;
 }
+
 
 #body {
     width:50%;
@@ -617,24 +619,42 @@ hr {
 }
 
 
-#chart-output-area {
+#choropleth-output-area {
     background-color: #252e3f;
     color: #252e3f;
     margin: 2.5rem 2.5rem 2.5rem 0;
 }
 
 
-#chart-creation-area {
+#choropleth-creation-area {
     padding:5px;
     margin: 2.5rem 2.5rem 2.5rem 0;
     width: 30%;
 }
+
 
 #files {
      margin: 2.5rem 2.5rem 2.5rem 2.5rem;
      background-color: #252e3f;
      color: #252e3f;
      width: 50%;
+}
+
+
+#charts-data {
+    background-color: #252e3f;
+}
+
+
+#charts {
+    background-color: #252e3f;
+    float: right;
+}
+
+
+#data {
+    background-color: #252e3f;
+    float: left;
 }
 
 
@@ -646,7 +666,7 @@ hr {
 
 #create-chart {
     float: left;
-    margin: 2.5rem 2.5rem 2.5rem 2.5rem;
+    margin 2.5rem 2.5rem 2.5rem 2.5rem;
 }
 
 
@@ -655,12 +675,14 @@ hr {
     background-color: #1f2630;
     color: #ffffff;
     text-align: center;
+    line-height: 500%;
     text-color: #ffffff;
     width: 50%;                                                
     height: 60px; 
 }
 
-#dropdown {
+
+#x-variable-dropdown {
     margin: 2.5rem 0 0 0;
     background-color: #252e3f;
     color: #252e3f; 

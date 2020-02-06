@@ -9,17 +9,17 @@ from app import app
 from helpers import *
 
 
-@app.callback(Output('chart-output-area', 'children'),
+@app.callback(Output('choropleth-output-area', 'children'),
               [Input('create-chart', 'n_clicks')],
-              [State('session', 'data'), State('dropdown', 'value'),
-              State('country', 'value'), State('location-radio', 'value')])
-def create_chart(n_clicks, data_store, variable, country, location_mode):
+              [State('session', 'data'), State('x-variable-dropdown', 'value'),
+              State('countries', 'value'), State('location-radio', 'value')])
+def create_choropleth(n_clicks, data_store, x_variable, countries, location_mode):
     if n_clicks is None or data_store is None:
         raise PreventUpdate
     else:
         try:
             df = pd.read_json(data_store)
-            fig = create_choropleth(df, variable, location_mode, country)
+            fig = choropleth_chart(df, x_variable, location_mode, countries)
             return [
                 dcc.Graph(
                     id='user-choropleth',
@@ -31,10 +31,10 @@ def create_chart(n_clicks, data_store, variable, country, location_mode):
             ]
 
 
-def create_choropleth(df, variable, location_mode, country):
+def choropleth_chart(df, x_variable, location_mode, countries):
     fig = go.Figure(data=go.Choropleth(
-    locations=df[country],  # Spatial coordinates
-    z=df[variable].astype(float),  # Data to be color-coded
+    locations=df[countries],  # Spatial coordinates
+    z=df[x_variable].astype(float),  # Data to be color-coded
     locationmode=location_mode,  # set of locations match entries in `locations`
     colorscale='Reds',
     colorbar_title = 'X variable'
