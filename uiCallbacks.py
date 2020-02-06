@@ -40,7 +40,7 @@ def update_file_list(contents, filename):
 @app.callback(Output('chart-creation-area', 'children'),
               [Input('show-file', 'n_clicks')],
               [State('files', 'value')])
-def populate_choropleth_menu(n_clicks, filename):
+def populate_chart_menu(n_clicks, filename):
     if filename is None or n_clicks is None:
         raise PreventUpdate
     else:
@@ -57,5 +57,5 @@ def populate_choropleth_menu(n_clicks, filename):
             ),
             dcc.Dropdown(id='country', options=[{'label': i, 'value': i}
                                                 for i in df.columns], value=df.columns[0]),
-            html.Button('Create choropleth', id='create-choropleth')
+            html.Button('Create choropleth', id='create-chart')
         ]

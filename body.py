@@ -10,6 +10,5 @@ DATASETS_PATH = './datasets/'
 
 def serve_body():
     return html.Div(id='body', children=[
-        html.Div(id='chart-creation-area'),
         html.Div(id='chart-output-area')
     ])
