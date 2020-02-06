@@ -6,7 +6,6 @@ from app import server # Need for heroku procfile
 from layouts import serve_layout
 import uiCallbacks
 import chartCallbacks
-from flask_caching import Cache
 
 
 app.layout = serve_layout
