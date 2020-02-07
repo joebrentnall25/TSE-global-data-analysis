@@ -11,7 +11,9 @@ def serve_choropleth():
 def serve_charts_data():
     return html.Div(id='charts-data', children=[
         html.Div(id='charts'),
-        html.Div(id='data')])
+        html.Div(id='stats'),
+        html.Div(id='country-data')
+    ])
 
 
 # TODO add data table div?

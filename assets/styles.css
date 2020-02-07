@@ -613,7 +613,7 @@ hr {
 
 #side-bar {
     float: left; 
-    width:49%;
+    width:25%;
     height:auto;
     background-color: #252e3f;
 }
@@ -628,16 +628,20 @@ hr {
 
 #choropleth-creation-area {
     padding:5px;
-    margin: 2.5rem 2.5rem 2.5rem 0;
-    width: 30%;
+    margin: 2.5rem 2.5rem 2.5rem 2.0rem;
+    width: 75%;
+}
+
+#country-data {
+    float: right;
 }
 
 
 #files {
-     margin: 2.5rem 2.5rem 2.5rem 2.5rem;
      background-color: #252e3f;
      color: #252e3f;
-     width: 50%;
+     width: 75%;
+     margin: 2.5rem 2.5rem 2.5rem 2.5rem;
 }
 
 
@@ -652,21 +656,25 @@ hr {
 }
 
 
-#data {
+#stats {
     background-color: #252e3f;
     float: left;
 }
 
 
-#show-file {
+#show-choropleth-opts {
     float: left;
     margin: 2.5rem 2.5rem 2.5rem 2.5rem;
 }
 
 
-#create-chart {
+#location-radio {
     float: left;
-    margin 2.5rem 2.5rem 2.5rem 2.5rem;
+}
+
+
+#create-choropleth {
+    float: left;
 }
 
 
@@ -677,23 +685,21 @@ hr {
     text-align: center;
     line-height: 500%;
     text-color: #ffffff;
-    width: 50%;                                                
+    width: 75%;                                                
     height: 60px; 
 }
 
 
 #x-variable-dropdown {
-    margin: 2.5rem 0 0 0;
+    float: left;
     background-color: #252e3f;
-    color: #252e3f; 
     width: 100%;
 }
 
 
-#country {
-    margin: 2.5rem 0 0 0;
+#countries {
     background-color: #252e3f;
-    color: #252e3f;
+    float: left;
     width: 100%;
 }
 

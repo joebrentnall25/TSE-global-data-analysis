@@ -5,8 +5,7 @@ import os
 
 DATASETS_PATH = './datasets/'
 
-
-# return sidebar for choropleth creation + summary stats
+# return sidebar for choropleth creation
 def serve_sidebar():
     return html.Div(id='side-bar', children=[
         dcc.Upload(
@@ -15,10 +14,10 @@ def serve_sidebar():
                 'Drag and Drop or ',
                 html.A('Select Files to upload')
             ]),
-            # Allow multiple files to be uploaded
+            # Allow multiple files to be uploaded by the user(simultaneously)
             multiple=True
         ),
-        # List all .csv files hosted on the server
+        # List all .csv or .xls files hosted on the server
         html.Div(id='file-list',
                  children=[dcc.Dropdown(id='files',
                                         options=[{'label': filename,

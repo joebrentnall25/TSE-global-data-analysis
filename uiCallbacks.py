@@ -1,9 +1,11 @@
 from dash.dependencies import Input, Output, State
 import dash_html_components as html
 import dash_core_components as dcc
+import dash_table as dt
 from dash.exceptions import PreventUpdate
 import pandas as pd
 import numpy as np
+import json
 import os
 from pathlib import Path
 from app import app
@@ -52,6 +54,11 @@ def populate_choropleth_menu(n_clicks, filename):
             dcc.Dropdown(id='x-variable-dropdown', options=[{'label': i, 'value': i}
                                                  for i in df.columns],
                          value=df.columns[0]),
+            # TODO add color radio code
+            dcc.RadioItems(id='color-radio'),
+            dcc.Dropdown(id='countries', options=[{'label': i, 'value': i}
+                                                for i in df.columns],
+                         value=df.columns[0]),
             dcc.RadioItems(id='location-radio',
                 options=[
                     {'label': 'ISO-3', 'value': 'ISO-3'},
@@ -59,17 +66,12 @@ def populate_choropleth_menu(n_clicks, filename):
                 ],
              value='ISO-3'
             ),
-            # TODO add color radio code
-            dcc.RadioItems(id='color-radio'),
-            dcc.Dropdown(id='countries', options=[{'label': i, 'value': i}
-                                                for i in df.columns],
-                         value=df.columns[0]),
-            html.Button('Create choropleth', id='create-chart')
+            html.Button('Create choropleth', id='create-choropleth')
         ]
 
 
-@app.callback(Output('data', 'children'),
-              [Input('create-chart', 'n_clicks')],
+@app.callback(Output('stats', 'children'),
+              [Input('create-choropleth', 'n_clicks')],
               [State('session', 'data'), State('x-variable-dropdown', 'value')])
 def update_summary_stats(n_clicks, data_store, x_variable):
     if n_clicks is None or data_store is None:
@@ -80,12 +82,35 @@ def update_summary_stats(n_clicks, data_store, x_variable):
         # check if quantative or categorical variable
         if df[x_variable].dtype == np.float64 or df[x_variable].dtype == np.int64:
             return [
-                # TODO replace with listing?
-                html.H3("Mean: {}".format(round(df[x_variable].mean()), 2)),
-                html.H3("Median: {}".format(round(df[x_variable].median()), 2)),
-                html.H3("Standard Deviation: {}".format(round(df[x_variable].std()), 2)),
-                html.H3("Variance: {}".format(round(df[x_variable].var()), 2))
-            ]
+                html.Ul(id='stats-list', children=[
+                    html.H3("Summary statistics: "),
+                    html.Li("Mean: {}".format(round(df[x_variable].mean()), 2)),
+                    html.Li("Median: {}".format(round(df[x_variable].median()), 2)),
+                    html.Li("Standard Deviation: {}".format(round(df[x_variable].std()), 2)),
+                    html.Li("Variance: {}".format(round(df[x_variable].var()), 2)),
+                    html.Li("IQR: {}".format(round(df[x_variable].quantile(0.75) - df[x_variable].quantile(0.25)), 2))
+                ])]
         else:
-            # TODO implement categorical summary stats
             pass
+            # TODO implement categorical summary stats
+
+
+@app.callback(Output('country-data', 'children'),
+              [Input('user-choropleth', 'clickData')],
+              [State('session', 'data'), State('location-radio', 'value')])
+def display_country_data(click, data_store, location_mode):
+    # Extract the country code/name from the JSON response
+    country_name = click['points'][0]['location']
+    df = pd.read_json(data_store)
+    # location mode determines the col we match in
+    if location_mode == 'ISO-3':
+        country = df[df['Country Code'].str.contains(country_name, case=False)]
+    else:
+        country = df[df['Country Names'].str.contains(country_name, case=False)]
+
+    return dt.DataTable(
+        id='country-table',
+        columns=[{"name": i, "id": i} for i in df.columns],
+        data=country.to_dict('records'),
+        fixed_columns={'headers': True, 'data': 1}
+    )
