@@ -1,21 +1,20 @@
 import dash_core_components as dcc
 import dash_html_components as html
 import os
+from app import DATASETS_PATH
 
-
-DATASETS_PATH = './datasets/'
 
 # return sidebar for choropleth creation
 def serve_sidebar():
-    return html.Div(id='side-bar', children=[
+    return html.Div(id='sidebar', children=[
         dcc.Upload(
             id='upload-data',
             children=html.Div([
                 'Drag and Drop or ',
                 html.A('Select Files to upload')
             ]),
-            # Allow multiple files to be uploaded by the user(simultaneously)
-            multiple=True
+            # Do NOT Allow SIMULTANEOUS uploads by the user
+            multiple=False
         ),
         # List all .csv or .xls files hosted on the server
         html.Div(id='file-list',
@@ -23,7 +22,7 @@ def serve_sidebar():
                                         options=[{'label': filename,
                                                   'value': filename}
                                                              for filename in
-                                                             os.listdir(DATASETS_PATH)], value=None)]),
+                                                             os.listdir(DATASETS_PATH)], value='./proper.csv')]),
         html.Button('Populate menu', id='show-choropleth-opts'),
         html.Div(id='choropleth-creation-area')
     ])

@@ -611,7 +611,7 @@ hr {
 }
 
 
-#side-bar {
+#sidebar {
     float: left; 
     width:25%;
     height:auto;
@@ -621,8 +621,13 @@ hr {
 
 #choropleth-output-area {
     background-color: #252e3f;
-    color: #252e3f;
     margin: 2.5rem 2.5rem 2.5rem 0;
+}
+
+#graph-output-area {
+    background-color: #252e3f;
+    margin: 2.5rem 2.5rem 2.5rem 0;
+    float: left;
 }
 
 
@@ -632,39 +637,50 @@ hr {
     width: 75%;
 }
 
+
 #country-data {
     float: right;
+    background-color: #252e3f;
+    margin: 2.5rem;
 }
 
+
+#colour-blind-check {
+    float: left;
+    font-size: 12px;
+}
 
 #files {
      background-color: #252e3f;
      color: #252e3f;
      width: 75%;
-     margin: 2.5rem 2.5rem 2.5rem 2.5rem;
+     margin: 2.5rem;
 }
 
 
-#charts-data {
+#graphs-data {
     background-color: #252e3f;
+    margin: 2.5rem
 }
 
 
-#charts {
+#graphs {
     background-color: #252e3f;
+    margin: 2.5rem;
     float: right;
 }
 
 
 #stats {
     background-color: #252e3f;
+    margin: 2.5rem;
     float: left;
 }
 
 
 #show-choropleth-opts {
     float: left;
-    margin: 2.5rem 2.5rem 2.5rem 2.5rem;
+    margin: 2.5rem;
 }
 
 
@@ -675,6 +691,13 @@ hr {
 
 #create-choropleth {
     float: left;
+    margin: 2.5rem
+}
+
+#graph-type {
+}
+
+#y-variable-dropdown {
 }
 
 
@@ -697,7 +720,20 @@ hr {
 }
 
 
+#y-variable-dropdown {
+    float: left;
+    background-color: #252e3f;
+    width: 100%;
+}
+
 #countries {
+    background-color: #252e3f;
+    float: left;
+    width: 100%;
+}
+
+
+#colour-dropdown {
     background-color: #252e3f;
     float: left;
     width: 100%;
@@ -713,8 +749,9 @@ hr {
     }
 }
 
+
 @media (max-width: 550px) {
-    #chart-output-area.annotation-text{
+    #choropleth-output-area.annotation-text{
         font-size: 1.2rem !important;
     }
 }
@@ -722,7 +759,7 @@ hr {
 
 /* Graph
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-#chart-output-area {
+#choropleth-output-area {
     background-color: #252e3f;
     padding: 5rem;
     margin: 0;

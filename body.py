@@ -1,5 +1,7 @@
 import dash_core_components as dcc
 import dash_html_components as html
+# Layout generation functions for main body
+
 
 
 def serve_choropleth():
@@ -8,14 +10,12 @@ def serve_choropleth():
     ])
 
 
-def serve_charts_data():
-    return html.Div(id='charts-data', children=[
-        html.Div(id='charts'),
+def serve_graphs_data():
+    return html.Div(id='graphs-stats-container', children=[
+        html.Div(id='graphs', children=[
+            html.Div(id='graph-creation-area'),
+            html.Div(id='graph-output-area')
+        ]),
         html.Div(id='stats'),
         html.Div(id='country-data')
     ])
-
-
-# TODO add data table div?
-def serve_data_table():
-    pass

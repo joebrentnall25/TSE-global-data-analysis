@@ -4,8 +4,9 @@ import pandas as pd
 import plotly.graph_objects as go
 from header import serve_header
 from body import serve_choropleth
-from body import serve_charts_data
+from body import serve_graphs_data
 from sidebar import serve_sidebar
+
 
 # Serve page layout
 def serve_layout():
@@ -16,5 +17,5 @@ def serve_layout():
             serve_sidebar(),
             serve_choropleth(),
         ]),
-        serve_charts_data()
-])
+        serve_graphs_data()
+    ])

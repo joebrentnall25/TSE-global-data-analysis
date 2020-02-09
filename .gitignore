@@ -4,4 +4,5 @@ env
 .DS_Store
 .vscode
 .rdb
+cache_director
 __pycache__
