@@ -27,5 +27,5 @@ def parse_file_to_df(contents, filename):
     elif filename.endswith('xls'):
         df = pd.read_excel(io.BytesIO(decoded))
     else:
-        raise TypeError
+        raise ValueError
     return df

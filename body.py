@@ -14,7 +14,6 @@ def serve_graphs_data():
     return html.Div(id='graphs-stats-container', children=[
         html.Div(id='graphs', children=[
             html.Div(id='graph-creation-area'),
-            html.Div(id='graph-output-area')
         ]),
         html.Div(id='stats'),
         html.Div(id='country-data')

@@ -4,19 +4,16 @@ import dash_core_components as dcc
 from dash.exceptions import PreventUpdate
 import plotly.graph_objects as go
 import pandas as pd
-from pandas.api.types import is_string_dtype
-from pandas.api.types import is_numeric_dtype
-from app import app
-from app import DATASETS_PATH
+from pandas.api.types import is_string_dtype, is_numeric_dtype
+from app import app, DATASETS_PATH
 import os
-from graphs import choropleth, histogram
-from graphs import GRAPH_TYPES
+from graphs import choropleth, histogram, GRAPH_TYPES
 import re
 
 
 # Callback to create the choropleth from user dataset
 @app.callback(Output('choropleth-output-area', 'children'),
-              [Input('create-choropleth', 'n_clicks')],
+              [Input('create-dashboard', 'n_clicks')],
               [State('x-variable-dropdown', 'value'), State('countries', 'value'),
                State('location-radio', 'value'), State('files', 'value'),
                State('colour-dropdown', 'value')])
@@ -72,6 +69,26 @@ def create_choropleth(n_clicks,
     return dcc.Graph(id='user-choropleth', figure=fig)
 
 
+@app.callback(Output('graph-creation-area', 'children'),
+                  [Input('create-dashboard', 'n_clicks')],
+                  [State('files', 'value'), State('x-variable-dropdown', 'value'),
+                  State('y-variable-dropdown', 'value')])
+def populate_graph_menu(n_clicks, filename, x_variable, y_variable):
+    if n_clicks is None:
+        raise PreventUpdate
+    df = pd.read_csv(os.path.join(DATASETS_PATH, filename))
+    fig = histogram(df, x_variable, 'ex')
+    return [
+            dcc.Dropdown(id='graph-type',
+                     options=[{'label': graph_type, 'value': graph_type}
+                                for graph_type in GRAPH_TYPES],
+                    value=GRAPH_TYPES[0]),
+            html.Button('Create graph', id='create-graph'),
+            html.Div(id='graph-output-area', children=[
+                dcc.Graph(id='user-graph', figure=fig)
+        ])]
+
+
 @app.callback(Output('graph-output-area', 'children'),
              [Input('create-graph', 'n_clicks')],
              [State('graph-type', 'value'),
@@ -82,11 +99,6 @@ def create_graph(n_clicks, graph_type, x_variable, y_variable, filename, colour_
         raise PreventUpdate
 
     df = pd.read_csv(os.path.join(DATASETS_PATH, filename))
-    # No need to check x variable here, as been handled in choropleth code
-    if not is_numeric_dtype(df[y_variable]):
-        return [
-            html.H3("Error y variable is non-quantative")
-        ]
 
     if graph_type == 'Histogram':
         fig = histogram(df, x_variable, colour_scheme)

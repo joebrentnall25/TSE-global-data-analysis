@@ -2,7 +2,9 @@ venv
 env
 *.pyc
 .DS_Store
-.vscode
-.rdb
-cache_director
+*.ipynb
+*.ipynb_checkpoints
+cache_directory
 __pycache__
+Dockerfile
+.dockerignore

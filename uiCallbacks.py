@@ -5,17 +5,10 @@ import dash_table as dt
 from dash.exceptions import PreventUpdate
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
-from app import app
-from app import DATASETS_PATH
+from app import app, DATASETS_PATH
 import os
 from helpers import parse_file_to_df
-from graphs import GRAPH_TYPES
-import plotly.express as px
-
-
-# List of avaliable plotly continuous colourscales
-CONTINUOUS_COLOUR_SCALES = px.colors.named_colorscales()
-QUALATATIVE_SWATCHES = px.colors.qualitative.swatches()
+from graphs import CONTINUOUS_COLOUR_SCALES
 
 
 @app.callback(Output('file-list', 'children'),
@@ -52,32 +45,31 @@ def update_file_storage(contents, filename, curr_children):
         ]
 
 
-@app.callback(Output('choropleth-creation-area', 'children'),
-              [Input('show-choropleth-opts', 'n_clicks')],
+@app.callback(Output('dashboard-creation-area', 'children'),
+              [Input('show-dashboard-opts', 'n_clicks')],
               [State('files', 'value')])
-def populate_choropleth_menu(n_clicks, filename):
+def populate_dashboard_menu(n_clicks, filename):
     if n_clicks is None:
         raise PreventUpdate
 
     df = pd.read_csv(os.path.join(DATASETS_PATH, filename), index_col=0)
     return [
-        # Dropdown for x variable
         # TODO implement UI labeling
         dcc.Dropdown(id='x-variable-dropdown', options=[{'label': i, 'value': i}
                                                         for i in df.columns],
-                            value=df.columns[0]),
+                            placeholder='Select x variable'),
         dcc.Dropdown(id='y-variable-dropdown', options=[{'label': i, 'value': i}
                                                         for i in df.columns],
-                            value=df.columns[0]),
+                            placeholder='Select y variable (optional)'),
         # Dropdown for indicating where country information is located in df
         dcc.Dropdown(id='countries', options=[{'label': i, 'value': i}
                                                 for i in df.columns],
-                        value=df.columns[0]),
+                        placeholder='Select countries column'),
         # ISO ALPHA-3 or country names?
         dcc.RadioItems(id='location-radio',
             options=[
                 {'label': 'ISO-3 (Default)', 'value': 'ISO-3'},
-                {'label': 'Country Names', 'value': 'country names'},
+                {'label': 'Country Names', 'value': 'Country Names'},
             ],
             value='ISO-3'
         ),
@@ -86,42 +78,26 @@ def populate_choropleth_menu(n_clicks, filename):
                         options=[{'label': colourscheme, 'value': colourscheme}
                                  for colourscheme in CONTINUOUS_COLOUR_SCALES],
                         value=CONTINUOUS_COLOUR_SCALES[0]),
-        # create map
-        html.Button('Create Map', id='create-choropleth')
+        # create dashboard
+        html.Button('Create Dashboard', id='create-dashboard')
      ]
 
 
-@app.callback(Output('graph-creation-area', 'children'),
-              [Input('create-choropleth', 'n_clicks')],
-              [State('files', 'value'), State('x-variable-dropdown', 'value'),
-               State('y-variable-dropdown', 'value')])
-def populate_graph_menu(n_clicks, filename, x_variable, y_variable):
-    if n_clicks is None:
-        raise PreventUpdate
-    return [
-        dcc.Dropdown(id='graph-type',
-                     options=[{'label': graph_type, 'value': graph_type}
-                              for graph_type in GRAPH_TYPES],
-                     value=GRAPH_TYPES[0]),
-        html.Button('Create graph', id='create-graph')
-    ]
-
-
-
 @app.callback(Output('stats', 'children'),
-              [Input('create-choropleth', 'n_clicks')],
+              [Input('create-dashboard', 'n_clicks')],
               [State('x-variable-dropdown', 'value'), State('y-variable-dropdown', 'value'),
                State('files', 'value')])
 def update_summary_stats(n_clicks, x_variable, y_variable, filename):
     if n_clicks is None:
         raise PreventUpdate
-    # read from FS as usual...
+    
+    #read from FS as usual...
     df = pd.read_csv(os.path.join(DATASETS_PATH, filename))
-    # check we're dealing with a quantative variable
-    if is_numeric_dtype(df[x_variable]) and is_numeric_dtype(df[y_variable]):
+    # check we're dealing with two quantatative variables
+    if is_numeric_dtype(df[x_variable]) and not y_variable == None and is_numeric_dtype(df[y_variable]):
         return [
             html.Ul(id='stats-list', children=[
-                html.H3("Summary statistics for x variable: {}".format(x_variable)),
+                html.H6("Summary statistics for x variable: {}".format(x_variable)),
                 html.Li("Minimum: {}".format(round(df[x_variable].min()), 2)),
                 html.Li("Maximum: {}".format(round(df[x_variable].max()), 2)),
                 html.Li("Mean: {}".format(round(df[x_variable].mean()), 2)),
@@ -130,19 +106,19 @@ def update_summary_stats(n_clicks, x_variable, y_variable, filename):
                 html.Li("Variance: {}".format(round(df[x_variable].var()), 2)),
                 html.Li("IQR: {}".format(round(df[x_variable].quantile(0.75) - df[x_variable].quantile(0.25)), 2)),
 
-                html.H3("Summary statistics for y variable: {}".format(y_variable)),
+                html.H6("Summary statistics for y variable: {}".format(y_variable)),
                 html.Li("Minimum: {}".format(round(df[y_variable].min()), 2)),
                 html.Li("Maximum: {}".format(round(df[y_variable].max()), 2)),
                 html.Li("Mean: {}".format(round(df[y_variable].mean()), 2)),
                 html.Li("Median: {}".format(round(df[y_variable].median()), 2)),
                 html.Li("Standard Deviation: {}".format(round(df[y_variable].std()), 2)),
                 html.Li("Variance: {}".format(round(df[y_variable].var()), 2)),
-                html.Li("IQR: {}".format(round(df[y_variable].quantile(0.75) - df[y_variable].quantile(0.75)), 2))
+                html.Li("IQR: {}".format(round(df[y_variable].quantile(0.75) - df[y_variable].quantile(0.25)), 2))
             ])]
     elif is_numeric_dtype(df[x_variable]):
         return [
             html.Ul(id='stats-list', children=[
-                html.H3("Summary statistics for x variable: {}".format(x_variable)),
+                html.H6("Summary statistics for x variable: {}".format(x_variable)),
                 html.Li("Minimum: {}".format(round(df[x_variable].min()), 2)),
                 html.Li("Maximum: {}".format(round(df[x_variable].max()), 2)),
                 html.Li("Mean: {}".format(round(df[x_variable].mean()), 2)),
@@ -151,10 +127,10 @@ def update_summary_stats(n_clicks, x_variable, y_variable, filename):
                 html.Li("Variance: {}".format(round(df[x_variable].var()), 2)),
                 html.Li("IQR: {}".format(round(df[x_variable].quantile(0.75) - df[x_variable].quantile(0.25)), 2))
             ])]
-    elif is_numeric_dtype(df[y_variable]):
+    elif not y_variable == None and is_numeric_dtype(df[y_variable]):
         return [
             html.Ul(id='stats-list', children=[
-                html.H3("Summary statistics for y variable: {}".format(y_variable)),
+                html.H6("Summary statistics for y variable: {}".format(y_variable)),
                 html.Li("Maximum: {}".format(round(df[y_variable].min()), 2)),
                 html.Li("Maximum: {}".format(round(df[y_variable].max()), 2)),
                 html.Li("Mean: {}".format(round(df[y_variable].mean()), 2)),

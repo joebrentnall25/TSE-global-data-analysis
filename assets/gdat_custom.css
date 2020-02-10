@@ -631,7 +631,7 @@ hr {
 }
 
 
-#choropleth-creation-area {
+#dashboard-creation-area {
     padding:5px;
     margin: 2.5rem 2.5rem 2.5rem 2.0rem;
     width: 75%;
@@ -644,11 +644,6 @@ hr {
     margin: 2.5rem;
 }
 
-
-#colour-blind-check {
-    float: left;
-    font-size: 12px;
-}
 
 #files {
      background-color: #252e3f;
@@ -678,7 +673,7 @@ hr {
 }
 
 
-#show-choropleth-opts {
+#show-dashboard-opts {
     float: left;
     margin: 2.5rem;
 }
@@ -689,7 +684,7 @@ hr {
 }
 
 
-#create-choropleth {
+#create-dashboard {
     float: left;
     margin: 2.5rem
 }
@@ -771,13 +766,13 @@ hr {
         text-align: center;
     }
 
-    #chart-output-area {
+    #graph-output-area {
         margin-top: 5rem;
     }
 }
 
 @media (min-width: 1251px) {
-    #chart-output-area {
+    #graph-output-area {
         flex: 4 40%;
         margin: 0;
         display: flex;
@@ -788,7 +783,7 @@ hr {
 }
 
 @media (max-width: 550px) {
-    #chart-output-area {
+    #graph-output-area {
         padding: 2.5rem;
     }
 }
