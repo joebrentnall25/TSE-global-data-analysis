@@ -28,7 +28,10 @@ def choropleth(df, x_variable, location_mode, countries, colour_scheme):
 
 # TODO finish implementation of histogram fig
 def histogram(df, x_variable, colour_scheme):
-    fig = go.Figure(data=go.Histogram(x=df[x_variable], histnorm='probability'))
+    fig = go.Figure(data=go.Histogram(
+        x=df[x_variable],
+        )
+    )
     return fig
 
 
