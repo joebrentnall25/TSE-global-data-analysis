@@ -90,7 +90,7 @@ def populate_dashboard_menu(n_clicks, filename):
 def update_summary_stats(n_clicks, x_variable, y_variable, filename):
     if n_clicks is None:
         raise PreventUpdate
-    
+
     #read from FS as usual...
     df = pd.read_csv(os.path.join(DATASETS_PATH, filename))
     # check we're dealing with two quantatative variables
@@ -98,46 +98,46 @@ def update_summary_stats(n_clicks, x_variable, y_variable, filename):
         return [
             html.Ul(id='stats-list', children=[
                 html.H6("Summary statistics for x variable: {}".format(x_variable)),
-                html.Li("Minimum: {}".format(round(df[x_variable].min()), 2)),
-                html.Li("Maximum: {}".format(round(df[x_variable].max()), 2)),
-                html.Li("Mean: {}".format(round(df[x_variable].mean()), 2)),
-                html.Li("Median: {}".format(round(df[x_variable].median()), 2)),
-                html.Li("Standard Deviation: {}".format(round(df[x_variable].std()), 2)),
-                html.Li("Variance: {}".format(round(df[x_variable].var()), 2)),
-                html.Li("IQR: {}".format(round(df[x_variable].quantile(0.75) - df[x_variable].quantile(0.25)), 2)),
+                html.Li("Minimum: {:0.2f}".format(df[x_variable].min())),
+                html.Li("Maximum: {:0.2f}".format(df[x_variable].max())),
+                html.Li("Mean: {:0.2f}".format(df[x_variable].mean())),
+                html.Li("Median: {:0.2f}".format(df[x_variable].median())),
+                html.Li("Standard Deviation: {:0.2f}".format(df[x_variable].std())),
+                html.Li("Variance: {:0.2f}".format(df[x_variable].var())),
+                html.Li("IQR: {:0.2f}".format(df[x_variable].quantile(0.75) - df[x_variable].quantile(0.25))),
 
                 html.H6("Summary statistics for y variable: {}".format(y_variable)),
-                html.Li("Minimum: {}".format(round(df[y_variable].min()), 2)),
-                html.Li("Maximum: {}".format(round(df[y_variable].max()), 2)),
-                html.Li("Mean: {}".format(round(df[y_variable].mean()), 2)),
-                html.Li("Median: {}".format(round(df[y_variable].median()), 2)),
-                html.Li("Standard Deviation: {}".format(round(df[y_variable].std()), 2)),
-                html.Li("Variance: {}".format(round(df[y_variable].var()), 2)),
-                html.Li("IQR: {}".format(round(df[y_variable].quantile(0.75) - df[y_variable].quantile(0.25)), 2))
+                html.Li("Minimum: {:0.2f}".format(df[y_variable].min())),
+                html.Li("Maximum: {:0.2f}".format(df[y_variable].max())),
+                html.Li("Mean: {:0.2f}".format(df[y_variable].mean())),
+                html.Li("Median: {:0.2f}".format(df[y_variable].median())),
+                html.Li("Standard Deviation: {:0.2f}".format(df[y_variable].std())),
+                html.Li("Variance: {:0.2f}".format(df[y_variable].var())),
+                html.Li("IQR: {:0.2f}".format(df[y_variable].quantile(0.75) - df[y_variable].quantile(0.25)))
             ])]
     elif is_numeric_dtype(df[x_variable]):
         return [
             html.Ul(id='stats-list', children=[
                 html.H6("Summary statistics for x variable: {}".format(x_variable)),
-                html.Li("Minimum: {}".format(round(df[x_variable].min()), 2)),
-                html.Li("Maximum: {}".format(round(df[x_variable].max()), 2)),
-                html.Li("Mean: {}".format(round(df[x_variable].mean()), 2)),
-                html.Li("Median: {}".format(round(df[x_variable].median()), 2)),
-                html.Li("Standard Deviation: {}".format(round(df[x_variable].std()), 2)),
-                html.Li("Variance: {}".format(round(df[x_variable].var()), 2)),
-                html.Li("IQR: {}".format(round(df[x_variable].quantile(0.75) - df[x_variable].quantile(0.25)), 2))
+                html.Li("Minimum: {:0.2f}".format(df[x_variable].min())),
+                html.Li("Maximum: {:0.2f}".format(df[x_variable].max())),
+                html.Li("Mean: {:0.2f}".format(df[x_variable].mean())),
+                html.Li("Median: {:0.2f}".format(df[x_variable].median())),
+                html.Li("Standard Deviation: {:0.2f}".format(df[x_variable].std())),
+                html.Li("Variance: {:0.2f}".format(df[x_variable].var())),
+                html.Li("IQR: {:0.2f}".format(df[x_variable].quantile(0.75) - df[x_variable].quantile(0.25)))
             ])]
     elif not y_variable == None and is_numeric_dtype(df[y_variable]):
         return [
             html.Ul(id='stats-list', children=[
                 html.H6("Summary statistics for y variable: {}".format(y_variable)),
-                html.Li("Maximum: {}".format(round(df[y_variable].min()), 2)),
-                html.Li("Maximum: {}".format(round(df[y_variable].max()), 2)),
-                html.Li("Mean: {}".format(round(df[y_variable].mean()), 2)),
-                html.Li("Median: {}".format(round(df[y_variable].median()), 2)),
-                html.Li("Standard Deviation: {}".format(round(df[y_variable].std()), 2)),
-                html.Li("Variance: {}".format(round(df[y_variable].var()), 2)),
-                html.Li("IQR: {}".format(round(df[y_variable].quantile(0.75) - df[y_variable].quantile(0.25)), 2))
+                html.Li("Maximum: {:0.2f}".format(df[y_variable].min())),
+                html.Li("Maximum: {:0.2f}".format(df[y_variable].max())),
+                html.Li("Mean: {:0.2f}".format(df[y_variable].mean())),
+                html.Li("Median: {:0.2f}".format(df[y_variable].median())),
+                html.Li("Standard Deviation: {:0.2f}".format(df[y_variable].std())),
+                html.Li("Variance: {:0.2f}".format(df[y_variable].var())),
+                html.Li("IQR: {:0.2f}".format(df[y_variable].quantile(0.75) - df[y_variable].quantile(0.25)))
             ])]
     else:
         pass

@@ -2,9 +2,10 @@ import plotly.graph_objects as go
 import plotly_express as px
 import pandas as pd
 
- # Lists of avaliable plotly continuous colourscales etc.
+# Lists of avaliable plotly continuous colourscales etc.
 CONTINUOUS_COLOUR_SCALES = px.colors.named_colorscales()
 QUALATATIVE_SWATCHES = px.colors.qualitative.swatches()
+
 
 GRAPH_TYPES = [
     'Histogram',
