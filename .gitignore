@@ -1,5 +1,9 @@
 venv
 env
+*.key
+*key
+azure.*
+postgres*
 *.pyc
 .DS_Store
 *.ipynb

@@ -11,6 +11,8 @@ from helpers import parse_file_to_df
 from graphs import CONTINUOUS_COLOUR_SCALES
 
 
+
+
 @app.callback(Output('file-list', 'children'),
     [Input('upload-data', 'contents')],
     [State('upload-data', 'filename'), State('file-list', 'children')])

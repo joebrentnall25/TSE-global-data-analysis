@@ -1,6 +1,7 @@
-import plotly.graph_objects as go
+import plotly.graph_objs as go
 import plotly_express as px
 import pandas as pd
+
 
 # Lists of avaliable plotly continuous colourscales etc.
 CONTINUOUS_COLOUR_SCALES = px.colors.named_colorscales()

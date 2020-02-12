@@ -2,21 +2,23 @@ import base64
 import io
 import pandas as pd
 from dash.exceptions import PreventUpdate
+from dash.dependencies import Input, Output, State
 from app import app
 import os
+import json
+from datetime import datetime
 
 
-#TODO Remove? Local storage no longer needed.
-"""@app.callback(Output('session', 'data'),
-              [Input('show-file', 'n_clicks')],
-              [State('files', 'value')])
-def update_local_storage(n_clicks, filename):
+#TODO implement user auth & accounts?
+@app.callback(Output('session', 'data'),
+              [Input('login-success-btn', 'children')],
+              [State('username-field', 'value')])
+def update_user_session(n_clicks, username):
     if n_clicks is None:
         raise PreventUpdate
-    else:
-        df = pd.read_csv(DATASETS_PATH, index_col=0)
-        return df.to_json()
-"""
+    session_info = {"username": username, "login-time": str(datetime.now())}
+    return json.loads(session_info)
+
 
 def parse_file_to_df(contents, filename):
     content_type, content_string = contents.split(',')

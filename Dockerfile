@@ -3,6 +3,9 @@ FROM python:3.7
 RUN mkdir /gdat
 WORKDIR /gdat
 
+# Add enviroment variables for azure storage
+ARG AZURE_STORAGE_CONNECTION_STRING
+
 # pip install via requirements.txt file
 ADD requirements.txt /gdat/
 RUN pip install -r requirements.txt

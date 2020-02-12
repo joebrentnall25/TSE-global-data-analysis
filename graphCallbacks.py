@@ -50,7 +50,7 @@ def create_choropleth(n_clicks,
 
     fig = choropleth(df, x_variable, location_mode, countries, colour_scheme)
 
-    fig.update_layout(
+    """fig.update_layout(
         autosize=True,
         margin=go.layout.Margin(
             l=10, r=10, b=25, t=25,
@@ -65,7 +65,7 @@ def create_choropleth(n_clicks,
             size=12,
             color="#ffffff"
         )
-    )
+    )"""
     return dcc.Graph(id='user-choropleth', figure=fig)
 
 
