@@ -43,57 +43,75 @@ with open(CSV_PATH, "r", encoding="utf-8-sig") as csvFile:
             csvRow.update({"preceding": result})
 
 
-        # Finds country name with word 'and' 
-        # Stores country with multiple names as two 'akas'
+        # Finds country name with word 'and' or 'of' and splits it into a list
+        # Then stores countries with multiple names as two/three 'akas'
         if (re.search(' and ', csvRow["country"].lower())) or (re.search(' of ', csvRow["country"].lower())) is not None:
               
+            # Splits all words in country names
             akas = []          
             akas = csvRow["country"].split()
-            print(akas)
 
+            # Lists to store indevidual country names
             name_one = []
             name_two = []  
-            name_three = []          
+            name_three = [] 
+
+            # List to store all akas         
             result = []
 
+            # Is after first and/or
             is_after = False
+
+            # Is after second and/or
             is_after_again = False
+
+            # Is a third aka used
             used_three = False
 
             for i in range(len(akas)):
 
+                # If the current word in the list is 'and' or 'of' set booleans
                 if akas[i] == "and" or akas[i] == "of":
                     if is_after == True:
                         is_after_again = True
                     is_after = True
 
+                # Checks if the current word is not 'and' or 'of' or a space
                 if akas[i] != "and" or akas[i] != "of" or akas[i] == " ":
                     if is_after_again == True:
                         if akas[i] == "and" or akas[i] == "of":
                             continue
+                        # appends akas[i] to name_three 
                         name_three.append(akas[i])
                         used_three = True
                     if is_after == True and is_after_again == False:
                         if akas[i] == "and" or akas[i] == "of":
                             continue
+                        # appends akas[i] to name two
                         name_two.append(akas[i])
                     if is_after == False:
+                        # appends akas[i] to name three
                         name_one.append(akas[i])
 
+            # Converts the indevidual lists to strings
             str1 = ListToString(name_one).lower()
             str2 = ListToString(name_two).lower()
 
+            # If third aka is used, convert to string and append it to result
             if used_three == True:
                 str3 = ListToString(name_three).lower()
                 print(str2)
                 result.append(str3)
 
+            # Append first and second aka to result
             result.append(str1)
             result.append(str2)
 
+            # Append aka as new CSV row
             csvRow.update({"aka": result})
 
 
+        # All following makes sure everything is lower case
         else:
             csvRow["country"] = csvRow["country"].lower()
 
@@ -101,6 +119,7 @@ with open(CSV_PATH, "r", encoding="utf-8-sig") as csvFile:
         csvRow["state"] = csvRow["state"].lower()
         csvRow["m49"] = csvRow["m49"].zfill(3)
 
+        # Appends all data to the csv row
         data.append(csvRow)
 
 # write the data to a json file
